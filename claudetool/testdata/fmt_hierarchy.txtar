@@ -1,0 +1,58 @@
+Test autoformatting hierarchy
+
+-- bad.go --
+// This file is not properly gofmt'd.
+	package main
+-- gofmt.go --
+// This file is properly gofmt'd.
+package main
+-- goimports.go --
+// This file is properly goimport'd, but not gofumpt'd.
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+
+	fmt.Println("hi")
+}
+-- gofumpt.go --
+// This file is properly gofumpt'd.
+package main
+-- .commit --
+Initial commit
+
+-- bad.go --
+// This file is still not gofmt'd, but we won't complain, because it was already not gofmt'd.
+	package main
+
+	import "fmt"
+-- gofmt.go --
+// This file is no longer properly gofmt'd.
+	package main
+-- goimports.go --
+// If we remove the imports, it no longer is goimport'd.
+// It should thus be flagged as a formatting issue, despite being gofmt'd.
+package main
+
+func main() {
+
+	fmt.Println("hi")
+}
+-- gofumpt.go --
+// This file is properly gofmt'd, but no longer gofumpt'd.
+package main
+
+func main() {
+
+	fmt.Println("hi")
+}
+-- .commit --
+Mess with formatting
+
+-- .run_autoformat --
+/PATH/TO/REPO/gofmt.go
+/PATH/TO/REPO/gofumpt.go
+/PATH/TO/REPO/goimports.go

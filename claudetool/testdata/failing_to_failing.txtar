@@ -1,0 +1,28 @@
+Going from failing tests to failing tests is not a regression
+
+-- p_test.go --
+package p
+
+import "testing"
+
+func TestX(t *testing.T) {
+	t.FailNow()
+}
+
+-- .commit --
+Initial commit (with failing test)
+
+-- p_test.go --
+package p
+
+import "testing"
+
+func TestX(t *testing.T) {
+	t.FailNow()
+}
+
+-- .commit --
+Test still failing
+
+-- .run_test --
+OK

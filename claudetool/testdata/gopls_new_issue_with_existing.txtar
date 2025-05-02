@@ -1,0 +1,38 @@
+Only new gopls issues should be reported when existing issues are present
+
+-- p.go --
+package p
+
+func F() {
+	x := 42
+}
+
+-- .commit --
+Initial commit with existing gopls issue
+
+-- p.go --
+package p
+
+func F() {
+	x := 42
+}
+
+func G() {
+	panic("i went down down down")
+	panic("burning ring of fire")
+}
+
+-- .commit --
+Add a new function with a new gopls issue
+
+-- .run_test --
+# Errors
+
+Gopls check issues detected:
+
+1. /PATH/TO/REPO/p.go:9:2-31: unreachable code
+
+IMPORTANT: Only fix new gopls check issues in parts of the code that you have already edited. Do not change existing code that was not part of your current edits.
+
+
+Please fix before proceeding.

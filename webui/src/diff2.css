@@ -1,0 +1,142 @@
+/* Custom styles for diff2 view */
+
+/* Override container max-width for diff2 view */
+#diff2View .diff-container {
+  max-width: 100%;
+  width: 100%;
+}
+
+/* When diff2 view is active, allow container to expand to full width */
+.container.diff2-active,
+.timeline-container.diff-active {
+  max-width: 100%;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Fix line-height inheritance issue */
+.d2h-code-line,
+.d2h-code-line-ctn,
+.d2h-code-linenumber {
+  line-height: 1.4 !important;
+}
+
+/* Make diff2 file container use the full width */
+.d2h-file-wrapper {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Make side-by-side view use the full width */
+.d2h-file-side-diff {
+  width: 50% !important;
+}
+
+/* Style for diff lines - for both side-by-side and unified views */
+.d2h-code-line,
+.d2h-code-side-line {
+  transition: background-color 0.2s;
+  position: relative;
+}
+
+.d2h-code-line:hover,
+.d2h-code-side-line:hover {
+  background-color: #e6f7ff !important;
+}
+
+/* Plus button styles for commenting */
+.d2h-gutter-comment-button {
+  display: none;
+  position: absolute;
+  right: 0; /* Adjusted from -11px to prevent layout shifts */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  background-color: #0366d6;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  opacity: 0.9;
+  z-index: 100;
+  user-select: none;
+}
+
+.d2h-gutter-comment-button:hover {
+  background-color: #0256bd;
+  opacity: 1;
+}
+
+/* Show the plus button on row hover (including line number and code) and when hovering over the button itself */
+tr:hover .d2h-gutter-comment-button,
+.d2h-gutter-comment-button:hover {
+  display: block;
+}
+
+/* Ensure diff2html content uses all available space */
+.diff2html-content {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Diff view controls */
+#diff-view-controls {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+}
+
+.diff-view-format {
+  display: flex;
+  gap: 15px;
+}
+
+.diff-view-format label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+}
+
+.diff-view-format input[type="radio"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Adjust code line padding to make room for the gutter button */
+.d2h-code-line-ctn {
+  position: relative;
+  padding-left: 14px !important;
+}
+
+/* Ensure gutter is wide enough for the plus button */
+.d2h-code-linenumber,
+.d2h-code-side-linenumber {
+  position: relative;
+  min-width: 60px !important; /* Increased from 45px to accommodate 3-digit line numbers plus button */
+  padding-right: 15px !important; /* Ensure space for the button */
+  overflow: visible !important; /* Prevent button from being clipped */
+  text-align: right; /* Ensure consistent text alignment */
+  box-sizing: border-box; /* Ensure padding is included in width calculation */
+}
+
+/* Ensure table rows and cells don't clip the button */
+.d2h-diff-table tr,
+.d2h-diff-table td {
+  overflow: visible !important;
+}
+
+/* Add a bit of padding between line number and code content for visual separation */
+.d2h-code-line-ctn,
+.d2h-code-side-line-ctn {
+  padding-left: 8px !important;
+}

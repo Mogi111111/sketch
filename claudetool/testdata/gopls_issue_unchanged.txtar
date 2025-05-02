@@ -1,0 +1,25 @@
+Pre-existing gopls issues should not be reported as regressions
+
+-- p.go --
+package p
+
+func F() {
+	x := 42
+}
+
+-- .commit --
+Initial commit with existing gopls issue
+
+-- p.go --
+package p
+
+func F() {
+	x := 42
+	// unrelated change
+}
+
+-- .commit --
+Make a change but keep the same gopls issue
+
+-- .run_test --
+OK

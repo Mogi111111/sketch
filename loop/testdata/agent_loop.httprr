@@ -1,0 +1,270 @@
+httprr trace v1
+9296 1708
+POST https://api.anthropic.com/v1/messages HTTP/1.1
+Host: api.anthropic.com
+User-Agent: Go-http-client/1.1
+Content-Length: 9099
+Anthropic-Version: 2023-06-01
+Content-Type: application/json
+
+{
+ "model": "claude-3-7-sonnet-20250219",
+ "messages": [
+  {
+   "role": "user",
+   "content": [
+    {
+     "type": "text",
+     "text": "What tools are available to you? Please just list them briefly.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ]
+  }
+ ],
+ "max_tokens": 8192,
+ "tools": [
+  {
+   "name": "bash",
+   "description": "Executes a shell command using bash -c with an optional timeout, returning combined stdout and stderr.\nWhen run with background flag, the process may keep running after the tool call returns, and\nthe agent can inspect the output by reading the output files. Use the background task when, for example,\nstarting a server to test something. Be sure to kill the process group when done.\n\nExecutables pre-installed in this environment include:\n- standard unix tools\n- go\n- git\n- rg\n- jq\n- gopls\n- sqlite\n- fzf\n- gh\n- python3",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "command"
+    ],
+    "properties": {
+     "command": {
+      "type": "string",
+      "description": "Shell script to execute"
+     },
+     "timeout": {
+      "type": "string",
+      "description": "Timeout as a Go duration string, defaults to 1m if background is false; 10m if background is true"
+     },
+     "background": {
+      "type": "boolean",
+      "description": "If true, executes the command in the background without waiting for completion"
+     }
+    }
+   }
+  },
+  {
+   "name": "keyword_search",
+   "description": "\nkeyword_search locates files with a search-and-filter approach.\nUse when navigating unfamiliar codebases with only conceptual understanding or vague user questions.\n\nEffective use:\n- Provide a detailed query for accurate relevance ranking\n- Prefer MANY SPECIFIC terms over FEW GENERAL ones (high precision beats high recall)\n- Order search terms by importance (most important first)\n- Supports regex search terms for flexible matching\n\nIMPORTANT: Do NOT use this tool if you have precise information like log lines, error messages, filenames, symbols, or package names. Use direct approaches (grep, cat, go doc, etc.) instead.\n",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "query",
+     "search_terms"
+    ],
+    "properties": {
+     "query": {
+      "type": "string",
+      "description": "A detailed statement of what you're trying to find or learn."
+     },
+     "search_terms": {
+      "type": "array",
+      "items": {
+       "type": "string"
+      },
+      "description": "List of search terms in descending order of importance."
+     }
+    }
+   }
+  },
+  {
+   "name": "think",
+   "description": "Think out loud, take notes, form plans. Has no external effects.",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "thoughts"
+    ],
+    "properties": {
+     "thoughts": {
+      "type": "string",
+      "description": "The thoughts, notes, or plans to record"
+     }
+    }
+   }
+  },
+  {
+   "name": "title",
+   "description": "Sets the conversation title and creates a git branch for tracking work. MANDATORY: You must use this tool before making any git commits.",
+   "input_schema": {
+    "type": "object",
+    "properties": {
+     "title": {
+      "type": "string",
+      "description": "A concise title summarizing what this conversation is about, imperative tense preferred"
+     },
+     "branch_name": {
+      "type": "string",
+      "description": "A 2-3 word alphanumeric hyphenated slug for the git branch name"
+     }
+    },
+    "required": [
+     "title",
+     "branch_name"
+    ]
+   }
+  },
+  {
+   "name": "done",
+   "description": "Use this tool when you have achieved the user's goal. The parameters form a checklist which you should evaluate.",
+   "input_schema": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Checklist",
+    "description": "A schema for tracking checklist items with status and comments",
+    "type": "object",
+    "required": [
+     "checklist_items"
+    ],
+    "properties": {
+     "checklist_items": {
+      "type": "object",
+      "description": "Collection of checklist items",
+      "properties": {
+       "wrote_tests": {
+        "$ref": "#/definitions/checklistItem",
+        "description": "If code was changed, tests were written or updated."
+       },
+       "passes_tests": {
+        "$ref": "#/definitions/checklistItem",
+        "description": "If any commits were made, tests pass."
+       },
+       "code_reviewed": {
+        "$ref": "#/definitions/checklistItem",
+        "description": "If any commits were made, the codereview tool was run and its output was addressed."
+       },
+       "git_commit": {
+        "$ref": "#/definitions/checklistItem",
+        "description": "Create git commits for any code changes you made. Match the style of recent commit messages. Include 'Co-Authored-By: sketch \u003chello@sketch.dev\u003e' and the original user prompt. Use GIT_AUTHOR_NAME=\"Test Agent\" GIT_AUTHOR_EMAIL=\"totallyhuman@sketch.dev\" (not git config)."
+       }
+      },
+      "additionalProperties": {
+       "$ref": "#/definitions/checklistItem"
+      }
+     }
+    },
+    "definitions": {
+     "checklistItem": {
+      "type": "object",
+      "required": [
+       "status"
+      ],
+      "properties": {
+       "status": {
+        "type": "string",
+        "description": "Current status of the checklist item",
+        "enum": [
+         "yes",
+         "no",
+         "not applicable",
+         "other"
+        ]
+       },
+       "description": {
+        "type": "string",
+        "description": "Description of what this checklist item verifies"
+       },
+       "comments": {
+        "type": "string",
+        "description": "Additional comments or context for this checklist item"
+       }
+      }
+     }
+    }
+   }
+  },
+  {
+   "name": "codereview",
+   "description": "Run an automated code review.",
+   "input_schema": {
+    "type": "object",
+    "properties": {}
+   }
+  },
+  {
+   "name": "patch",
+   "description": "File modification tool for precise text edits.\n\nOperations:\n- replace: Substitute text with new content\n- append_eof: Append new text at the end of the file\n- prepend_bof: Insert new text at the beginning of the file\n- overwrite: Replace the entire file with new content (automatically creates the file)\n\nUsage notes:\n- All inputs are interpreted literally (no automatic newline or whitespace handling)\n- For replace operations, oldText must appear EXACTLY ONCE in the file",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "path",
+     "patches"
+    ],
+    "properties": {
+     "path": {
+      "type": "string",
+      "description": "Absolute path to the file to patch"
+     },
+     "patches": {
+      "type": "array",
+      "description": "List of patch requests to apply",
+      "items": {
+       "type": "object",
+       "required": [
+        "operation",
+        "newText"
+       ],
+       "properties": {
+        "operation": {
+         "type": "string",
+         "enum": [
+          "replace",
+          "append_eof",
+          "prepend_bof",
+          "overwrite"
+         ],
+         "description": "Type of operation to perform"
+        },
+        "oldText": {
+         "type": "string",
+         "description": "Text to locate for the operation (must be unique in file, required for replace)"
+        },
+        "newText": {
+         "type": "string",
+         "description": "The new text to use (empty for deletions)"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ ],
+ "system": [
+  {
+   "text": "You are an expert coding assistant and architect, with a specialty in Go.\nYou are assisting the user to achieve their goals.\n\nStart by asking concise clarifying questions as needed.\nOnce the intent is clear, work autonomously.\n\nCall the title tool early in the conversation to provide a brief summary of\nwhat the chat is about.\n\nBreak down the overall goal into a series of smaller steps.\n(The first step is often: \"Make a plan.\")\nThen execute each step using tools.\nUpdate the plan if you have encountered problems or learned new information.\n\nWhen in doubt about a step, follow this broad workflow:\n\n- Think about how the current step fits into the overall plan.\n- Do research. Good tool choices: bash, think, keyword_search\n- Make edits.\n- Repeat.\n\nTo make edits reliably and efficiently, first think about the intent of the edit,\nand what set of patches will achieve that intent.\nThen use the patch tool to make those edits. Combine all edits to any given file into a single patch tool call.\n\nFor renames or refactors, consider invoking gopls (via bash).\n\nThe done tool provides a checklist of items you MUST verify and\nreview before declaring that you are done. Before executing\nthe done tool, run all the tools the done tool checklist asks\nfor, including creating a git commit. Do not forget to run tests.\n\n\u003cplatform\u003e\nlinux/amd64\n\u003c/platform\u003e\n\u003cpwd\u003e\n/\n\u003c/pwd\u003e\n\u003cgit_root\u003e\n\n\u003c/git_root\u003e\n\u003cHEAD\u003e\n\n\u003c/HEAD\u003e\n",
+   "type": "text",
+   "cache_control": {
+    "type": "ephemeral"
+   }
+  }
+ ]
+}HTTP/2.0 200 OK
+Anthropic-Organization-Id: 3c473a21-7208-450a-a9f8-80aebda45c1b
+Anthropic-Ratelimit-Input-Tokens-Limit: 200000
+Anthropic-Ratelimit-Input-Tokens-Remaining: 200000
+Anthropic-Ratelimit-Input-Tokens-Reset: 2025-04-30T17:29:47Z
+Anthropic-Ratelimit-Output-Tokens-Limit: 80000
+Anthropic-Ratelimit-Output-Tokens-Remaining: 80000
+Anthropic-Ratelimit-Output-Tokens-Reset: 2025-04-30T17:29:49Z
+Anthropic-Ratelimit-Requests-Limit: 4000
+Anthropic-Ratelimit-Requests-Remaining: 3999
+Anthropic-Ratelimit-Requests-Reset: 2025-04-30T17:29:47Z
+Anthropic-Ratelimit-Tokens-Limit: 280000
+Anthropic-Ratelimit-Tokens-Remaining: 280000
+Anthropic-Ratelimit-Tokens-Reset: 2025-04-30T17:29:47Z
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: 9388c364d81aed3b-SJC
+Content-Type: application/json
+Date: Wed, 30 Apr 2025 17:29:49 GMT
+Request-Id: req_011CNfK7wMYMH3rv3YTfoRHn
+Server: cloudflare
+Via: 1.1 google
+X-Robots-Tag: none
+
+{"id":"msg_01L6bfTxo2BbKxnFVT9ZdooZ","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"I can access the following tools:\n\n1. `bash` - Run shell commands\n2. `keyword_search` - Search for files containing specific terms\n3. `think` - Record my thoughts and planning\n4. `title` - Set conversation title and create a git branch\n5. `done` - Mark the task as complete with a checklist\n6. `codereview` - Run automated code review\n7. `patch` - Make precise text edits to files\n\nThese tools allow me to explore code, execute commands, make edits, and document my work."}],"stop_reason":"end_turn","stop_sequence":null,"usage":{"input_tokens":4,"cache_creation_input_tokens":2257,"cache_read_input_tokens":0,"output_tokens":126}}

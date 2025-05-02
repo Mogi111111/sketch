@@ -1,0 +1,103 @@
+Tests related files identification based on historical co-occurrence
+
+-- a.go --
+package main
+
+func a() {}
+
+-- b.go --
+package main
+
+func b() {}
+
+-- c.go --
+package main
+
+func c() {}
+
+-- p.go --
+package p
+
+func d() {}
+
+-- .commit --
+Add functions to a.go and b.go
+
+-- a.go --
+package main
+
+func a() {
+    // Update 1
+}
+
+-- b.go --
+package main
+
+func b() {
+    // Update 1
+}
+
+-- .commit --
+Add functions to a.go and b.go again
+
+-- a.go --
+package main
+
+func a() {
+    // Update 2
+}
+
+-- b.go --
+package main
+
+func b() {
+    // Update 2
+}
+
+-- .commit --
+Add functions to a.go and c.go
+
+-- a.go --
+package main
+
+func a() {
+    // Update 3
+}
+
+-- c.go --
+package main
+
+func c() {
+    // Update 1
+}
+
+-- .commit --
+Update file a.go only
+
+-- a.go --
+package main
+
+func a() {
+    x := 42 // new gopls issue to view mixed info/error lines
+}
+
+-- .run_test --
+# Info
+
+Potentially related files:
+
+- p.go (33%)
+
+These files have historically changed with the files you have modified. Consider whether they require updates as well.
+
+
+# Errors
+
+Gopls check issues detected:
+
+1. /PATH/TO/REPO/a.go:4:5-6: declared and not used: x
+
+IMPORTANT: Only fix new gopls check issues in parts of the code that you have already edited. Do not change existing code that was not part of your current edits.
+
+
+Please fix before proceeding.

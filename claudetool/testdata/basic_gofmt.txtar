@@ -1,0 +1,13 @@
+Test autoformatting happens
+
+-- .commit --
+Initial commit
+
+-- p.go --
+    package p
+
+-- .commit --
+Add non-gofmt file
+
+-- .run_autoformat --
+/PATH/TO/REPO/p.go

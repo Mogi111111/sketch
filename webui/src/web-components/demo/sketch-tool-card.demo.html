@@ -1,0 +1,294 @@
+<html>
+  <head>
+    <title>sketch-tool-card demo</title>
+    <link rel="stylesheet" href="demo.css" />
+
+    <script type="module" src="../sketch-tool-card.ts"></script>
+
+    <script>
+      const toolCalls = [
+        {
+          name: "multiple-choice",
+          input: JSON.stringify({
+            question: "What is your favorite programming language?",
+            choices: [
+              "JavaScript",
+              "TypeScript",
+              "Python",
+              "Go",
+              "Rust",
+              "Java",
+              "C#",
+              "C++",
+            ],
+          }),
+          result_message: {
+            type: "tool",
+            tool_result: JSON.stringify({
+              selected: "Go",
+            }),
+          },
+        },
+        {
+          name: "multiple-choice",
+          input: JSON.stringify({
+            question: "Which feature would you like to implement next?",
+            choices: [
+              "Dark mode",
+              "User profiles",
+              "Social sharing",
+              "Analytics dashboard",
+            ],
+          }),
+          // No result yet, showing the choices without a selection
+        },
+        {
+          name: "bash",
+          input: JSON.stringify({
+            command:
+              "docker ps -a --format '{{.ID}} {{.Image }} {{.Names}}' | grep sketch | awk '{print $1 }' | xargs -I {} docker rm {} && docker image prune -af",
+          }),
+          result_message: {
+            type: "tool",
+            tool_result: `Deleted Images:
+deleted: sha256:110d4aed8bcc76cb7327412504af8aef31670b816453a3088d834bbeefd11a2c
+deleted: sha256:042622460c913078901555a8a72de18e95228fca98b9ac388503b3baafafb683
+deleted: sha256:04ccf3d087e258ffd5f940f378c2aab3c0ed646fb2fb283f90e65397db304694
+deleted: sha256:877120aa3efd02b6afdad181c1cd75bbdc67e41a75dd770fbf781e4fe9c95fc7
+deleted: sha256:d96824c284e594acacc631458818d07842fd4cfa3a1037668a1b23abce077d7b
+deleted: sha256:d90eef6007f5782b59643eecb3edab38af6399d4142f0bb306742efa0e1cf6a4
+deleted: sha256:66b006b0d7570ccf7e2afa15e7b6e6385debba0e60e76eb314383215e480a664
+deleted: sha256:834ff90a57edf5c3987a3f21713310d189f209cec7b002a863c75a22e24cc114
+deleted: sha256:735be867a9939611842099b1131e23096fbde47bb326416382ff7a90a86ab687
+deleted: sha256:986792e96058cabe4452eab0fda2694fe2d5f0b951c446c9c1f94d86614f7bc6
+deleted: sha256:01539d19a06b87dd7a2268677c6beb06bc5aed3cde0c52691a684f4d085bc437
+deleted: sha256:d03b7602a43340d6d1e53ad1d7daa5b55740613ad969c360e1377b7af7597eba
+deleted: sha256:5a7310817c5fa3e29ebfe5b17031fdc5789543460c790ae2e1039226044a6109
+deleted: sha256:def65005e4b1e48e9531ce6ca6bea682bd8285e32b0748212fb8ace12976f920
+deleted: sha256:3b17b8e4e349ac09bac24da27ec4d65e3dec359645f73bd9a38bf015ca5f8a98
+deleted: sha256:1bef4e5c965c2fa2658954096dbe64dae8f3b1d7d595bdb370d54f4027a95603
+deleted: sha256:16e6b5b274b06916833d3f040ca045a12fe1a6a10bebf5f92338fe6b4c7dbbf7
+deleted: sha256:d90588879cc818bc3b3b575a291a3c4088d0ea1c61fad2c4a2f34160bdc86db6
+deleted: sha256:85903960027c7b9baf8bd0ee662571758ce8ffe83526839377284e2fccac558f
+untagged: sketch-94924d08c163:latest
+deleted: sha256:7c7c3957d3ba526a351d21e52a1aee0e72bb4a62d0422a0eb3a0e2b53391824f
+deleted: sha256:e4a1fe6a3369ca8f24baaba277bc9d97353992e9e051020c5a25e588a702e634
+deleted: sha256:28ccbe834ee66199498458f500b10cc9ea69460216982a537ea3294d6dfb0b63
+deleted: sha256:95c7d2956020039d92b546d6824c5d7fac163a6247be599160483d263094c047
+deleted: sha256:f87bc9eb655a06edd50d5a34e016175006c430ad129146b9b755169a3c318a57
+deleted: sha256:b455829fdcd5fe238567af2370f9fc021eb416ec2140f98b0ab59478febcfb2e
+deleted: sha256:ed64271d223807308a391a733fc556a6c16bfb87e6f9aed6d4ce394fcbb77ba6
+deleted: sha256:a5ce6521003bca24abcb4a0021837e789349fb3f44f7ceb00ef4af33ca01f84f
+deleted: sha256:57e05db1ff95deab5f5c3f38f9607a1c3bb21518133f4e0c137ffe6bb9cbfde9
+deleted: sha256:540194db01e12f59d19f7795ec9c8a1bb753df2de935469b21a10fc7ca1d25a5
+deleted: sha256:97519dae495c256597a9b7975a332e67edb21f93e306b72132ed2c30bb01b8aa
+deleted: sha256:162c7a942156fd5f16616c6fea4a26f2bfa01a53e499d59fdb8c68e815f5350e
+deleted: sha256:51b9d76df1fbcb277e4f22496ff661d4d748f499453a27a012629f78bb61107e
+deleted: sha256:7a1a595c3015a6b2f5e996988d094bcaca328ebeaafe37403e78322e10d6b859
+deleted: sha256:27631f63a84d9a524381a95168f24deb89612fb468e03bce724f352bb5ef7b3b
+deleted: sha256:58746669dff4a4051d05542e05109d57c94f867981b47bdb5800d62567a6280f
+untagged: golang:1.24.2-alpine3.21
+untagged: golang@sha256:7772cb5322baa875edd74705556d08f0eeca7b9c4b5367754ce3f2f00041ccee
+untagged: sketch-3c262c60c42c:latest
+deleted: sha256:fadf166900e61610d77d613ce52ca1c03711ce2a7bcd31f1f634529791c0c107
+deleted: sha256:8b719162dad84cddd630e1e943520041947ca91b3794417c0d2a03b3726ebaa4
+deleted: sha256:444f0e44dcaff517142f8aab35d35f08536d886a746f6858dac7052977ee2cff
+deleted: sha256:a95a3660958ed25a27ae7b0622b5426e046d4c5587693aa7c0098e050e057311
+deleted: sha256:edb781114acb505bbde5e4a3db68b7ab6f4a3c0da92ceed2d10f02c6278b93c8
+deleted: sha256:1429402020a73b7d5c1de32f9451c68e22508cc4238750f5a500e1d9737eedae
+deleted: sha256:3f749e03b0f5ef2dfc538581c92230f2cd6b844fe3c734c728fd3775865ed24c
+deleted: sha256:f62c6ba2d4f4b94796d4c4c111031fbbbaf22df24623a2d6729277dc1eaf8da8
+deleted: sha256:504579f990b8894755910252d3b401f86a589709efafb30b9ded67cb3edad80e
+deleted: sha256:2e22f953ef8cc5fac95fb0babc5042f5e2a7fefc9d5ec444429c490d54acb1ab
+deleted: sha256:afa0c23676c039532a39faa1f1506b19f34507b586796ea070dcaee30e6228ef
+deleted: sha256:5f176f397253734bdc726a505c84448f9b00e5652d9a28ef59de0581a2e8e923
+deleted: sha256:253afbfd579bc6daf71e42b0f1e369d2b6c9015028191af4478da0b77b8a85ed
+deleted: sha256:81f79e13183887f93db52268f00975f43613abc520c88e1090a1dbb3d09094e9
+deleted: sha256:3c0b6f56bdbec5bf995b818e8a67d2d6c3bd9aa3698c403b6dabc01a81a4cb52
+deleted: sha256:635f4ba57c6445e69cf8c6fba61c3690f76901e17334f6d2d165979b2d387dfa
+
+Total reclaimed space: 1.426GB`,
+          },
+        },
+        {
+          name: "bash",
+          input: JSON.stringify({
+            command: "ls -a",
+          }),
+          result_message: {
+            type: "tool",
+            tool_result: ".\n..",
+          },
+        },
+        {
+          name: "bash",
+          input: JSON.stringify({
+            command: "sleep 200",
+          }),
+          result_message: {
+            type: "tool",
+            tool_error: "the user canceled this operation",
+          },
+        },
+        {
+          name: "title",
+          input: JSON.stringify({
+            title: "a new title for this sketch",
+          }),
+        },
+        {
+          name: "codereview",
+          input: "{}",
+          tool_call_id: "toolu_01WT5qQwHZgdogfKhkD8R9PZ",
+          result_message: {
+            type: "tool",
+            end_of_turn: false,
+            content: "",
+            tool_name: "codereview",
+            input: "{}",
+            tool_result: "OK",
+            tool_call_id: "toolu_01WT5qQwHZgdogfKhkD8R9PZ",
+            timestamp: "2025-04-14T16:33:17.575759565Z",
+            conversation_id: "xsa-8hw0",
+            start_time: "2025-04-14T16:33:07.11793816Z",
+            end_time: "2025-04-14T16:33:17.57575719Z",
+            elapsed: 10457819031,
+            idx: 45,
+          },
+        },
+        {
+          name: "codereview",
+          input: "{}",
+          tool_call_id: "toolu_01WT5qQwHZgdogfKhkD8R9PZ",
+          result_message: {
+            type: "tool",
+            end_of_turn: false,
+            content: "",
+            tool_name: "codereview",
+            input: "{}",
+            tool_result: "Not OK",
+            tool_call_id: "toolu_01WT5qQwHZgdogfKhkD8R9PZ",
+            timestamp: "2025-04-14T16:33:17.575759565Z",
+            conversation_id: "xsa-8hw0",
+            start_time: "2025-04-14T16:33:07.11793816Z",
+            end_time: "2025-04-14T16:33:17.57575719Z",
+            elapsed: 10457819031,
+            idx: 45,
+          },
+        },
+        {
+          name: "think",
+          input:
+            '{"thoughts":"I\'m going to inspect a few key components to understand their purpose and relationships:\\n1. sketch-app-shell.ts - Appears to be the main container component\\n2. sketch-timeline.ts - Likely manages the chat timeline\\n3. sketch-view-mode-select.ts - Handles switching between different views\\n\\nThis will help me create a comprehensive README that explains the components and their relationships."}',
+          tool_call_id: "toolu_01R1g5mQVgKxEJZFNp9QGvUr",
+          result_message: {
+            type: "tool",
+            end_of_turn: false,
+            content: "",
+            tool_name: "think",
+            input:
+              '{"thoughts":"I\'m going to inspect a few key components to understand their purpose and relationships:\\n1. sketch-app-shell.ts - Appears to be the main container component\\n2. sketch-timeline.ts - Likely manages the chat timeline\\n3. sketch-view-mode-select.ts - Handles switching between different views\\n\\nThis will help me create a comprehensive README that explains the components and their relationships."}',
+            tool_result: "recorded",
+            tool_call_id: "toolu_01R1g5mQVgKxEJZFNp9QGvUr",
+            timestamp: "2025-04-14T16:32:14.12647133Z",
+            conversation_id: "xsa-8hw0",
+            start_time: "2025-04-14T16:32:14.126454329Z",
+            end_time: "2025-04-14T16:32:14.126468539Z",
+            elapsed: 14209,
+            idx: 18,
+          },
+        },
+        {
+          name: "patch",
+          input:
+            '{"path":"/app/webui/src/web-components/README.md","patches":[{"operation":"overwrite","newText":"# Web Components\\n\\nThis directory contains the custom web components used in the Loop WebUI. These components are built using the [Lit](https://lit.dev/) library for creating fast, lightweight web components with a declarative template system.\\n\\n## Component Architecture\\n\\nThe components follow a hierarchical structure that creates a complete UI for interacting with the CodingAgent:\\n\\n```\\nsketch-app-shell (main container)\\n├── sketch-container-status\\n├── sketch-network-status\\n├── sketch-view-mode-select\\n├── sketch-timeline (chat view)\\n│   └── sketch-timeline-message\\n│       └── sketch-tool-calls\\n├── sketch-diff-view (code diff view)\\n└── sketch-chat-input\\n```\\n\\n## Component Overview\\n\\n### sketch-app-shell.ts\\nThe main container component that orchestrates the entire UI. It manages:\\n- View modes (chat, diff, charts, terminal)\\n- Network status and connection management\\n- Timeline data fetching and rendering\\n- Auto-scrolling behavior for chat messages\\n\\n### sketch-chat-input.ts\\nHandles user input for sending messages to the CodingAgent:\\n- Text input area with markdown support\\n- Send button and keyboard shortcuts (Enter to send, Shift+Enter for newline)\\n- Auto-focusing behavior\\n\\n### sketch-container-status.ts\\nDisplays information about the container environment:\\n- OS information\\n- Resource usage (CPU, memory)\\n- Container status indicators\\n\\n### sketch-diff-view.ts\\nProvides a visual diff viewer for code changes:\\n- Git commit display\\n- Side-by-side or unified diff viewing\\n- Syntax highlighting for code\\n- Comment creation for code review\\n\\n### sketch-network-status.ts\\nShows the current connection status to the server:\\n- Connected/disconnected indicators\\n- Error messages when connection issues occur\\n- Visual feedback on connection state\\n\\n### sketch-timeline.ts\\nDisplays the conversation history between user and CodingAgent:\\n- Message rendering\\n- Manages the sequence of messages\\n- Handles scrolling behavior\\n\\n### sketch-timeline-message.ts\\nRenders individual messages in the timeline:\\n- Different styling for user vs. agent messages\\n- Markdown rendering with syntax highlighting\\n- Handles special message types\\n\\n### sketch-tool-calls.ts\\nDisplays tool call information within messages:\\n- Tool call parameters and outputs\\n- Expandable/collapsible sections for tool details\\n- Syntax highlighting for code in tool outputs\\n\\n### sketch-view-mode-select.ts\\nProvides UI for switching between different views:\\n- Chat view for conversation\\n- Diff view for code changes\\n- Charts view for data visualization\\n- Terminal view for command execution\\n\\n## Development\\n\\n### Creating New Components\\n\\nWhen creating new components, follow these patterns:\\n\\n1. Use the `@customElement` decorator to define the component\\n2. Encapsulate styles using the static `styles` property\\n3. Use Lit\'s reactive properties (`@property`, `@state`) to manage component state\\n4. Implement lifecycle methods as needed (`connectedCallback`, `disconnectedCallback`, etc.)\\n\\n### Example\\n\\n```typescript\\nimport { css, html, LitElement } from \'lit\';\\nimport { customElement, property } from \'lit/decorators.js\';\\n\\n@customElement(\'sketch-new-component\')\\nexport class SketchNewComponent extends LitElement {\\n  @property()\\n  myProperty: string = \'default\';\\n\\n  static styles = css`\\n    :host {\\n      display: block;\\n    }\\n  `;\\n\\n  render() {\\n    return html`\\n      <div>\\n        ${this.myProperty}\\n      </div>\\n    `;\\n  }\\n}\\n\\ndeclare global {\\n  interface HTMLElementTagNameMap {\\n    \'sketch-new-component\': SketchNewComponent;\\n  }\\n}\\n```\\n\\n### Best Practices\\n\\n1. Maintain a single responsibility for each component\\n2. Use properties and events for parent-child communication\\n3. Document the purpose and API of each component\\n4. Write tests for components where possible\\n5. Keep styles encapsulated within components\\n6. Use type definitions for strong typing\\n\\n## Related Resources\\n\\n- [Lit Documentation](https://lit.dev/docs/)\\n- [Web Components Introduction](https://developer.mozilla.org/en-US/docs/Web/Web_Components)\\n- See `/app/webui/readme.md` for more information on the Loop WebUI project\\n"}]}',
+          tool_call_id: "toolu_01TNhLX2AWkZwsu2KCLKrpju",
+          result_message: {
+            type: "tool",
+            end_of_turn: false,
+            content: "",
+            tool_name: "patch",
+            input:
+              '{"path":"/app/webui/src/web-components/README.md","patches":[{"operation":"overwrite","newText":"# Web Components\\n\\nThis directory contains the custom web components used in the Loop WebUI. These components are built using the [Lit](https://lit.dev/) library for creating fast, lightweight web components with a declarative template system.\\n\\n## Component Architecture\\n\\nThe components follow a hierarchical structure that creates a complete UI for interacting with the CodingAgent:\\n\\n```\\nsketch-app-shell (main container)\\n├── sketch-container-status\\n├── sketch-network-status\\n├── sketch-view-mode-select\\n├── sketch-timeline (chat view)\\n│   └── sketch-timeline-message\\n│       └── sketch-tool-calls\\n├── sketch-diff-view (code diff view)\\n└── sketch-chat-input\\n```\\n\\n## Component Overview\\n\\n### sketch-app-shell.ts\\nThe main container component that orchestrates the entire UI. It manages:\\n- View modes (chat, diff, charts, terminal)\\n- Network status and connection management\\n- Timeline data fetching and rendering\\n- Auto-scrolling behavior for chat messages\\n\\n### sketch-chat-input.ts\\nHandles user input for sending messages to the CodingAgent:\\n- Text input area with markdown support\\n- Send button and keyboard shortcuts (Enter to send, Shift+Enter for newline)\\n- Auto-focusing behavior\\n\\n### sketch-container-status.ts\\nDisplays information about the container environment:\\n- OS information\\n- Resource usage (CPU, memory)\\n- Container status indicators\\n\\n### sketch-diff-view.ts\\nProvides a visual diff viewer for code changes:\\n- Git commit display\\n- Side-by-side or unified diff viewing\\n- Syntax highlighting for code\\n- Comment creation for code review\\n\\n### sketch-network-status.ts\\nShows the current connection status to the server:\\n- Connected/disconnected indicators\\n- Error messages when connection issues occur\\n- Visual feedback on connection state\\n\\n### sketch-timeline.ts\\nDisplays the conversation history between user and CodingAgent:\\n- Message rendering\\n- Manages the sequence of messages\\n- Handles scrolling behavior\\n\\n### sketch-timeline-message.ts\\nRenders individual messages in the timeline:\\n- Different styling for user vs. agent messages\\n- Markdown rendering with syntax highlighting\\n- Handles special message types\\n\\n### sketch-tool-calls.ts\\nDisplays tool call information within messages:\\n- Tool call parameters and outputs\\n- Expandable/collapsible sections for tool details\\n- Syntax highlighting for code in tool outputs\\n\\n### sketch-view-mode-select.ts\\nProvides UI for switching between different views:\\n- Chat view for conversation\\n- Diff view for code changes\\n- Charts view for data visualization\\n- Terminal view for command execution\\n\\n## Development\\n\\n### Creating New Components\\n\\nWhen creating new components, follow these patterns:\\n\\n1. Use the `@customElement` decorator to define the component\\n2. Encapsulate styles using the static `styles` property\\n3. Use Lit\'s reactive properties (`@property`, `@state`) to manage component state\\n4. Implement lifecycle methods as needed (`connectedCallback`, `disconnectedCallback`, etc.)\\n\\n### Example\\n\\n```typescript\\nimport { css, html, LitElement } from \'lit\';\\nimport { customElement, property } from \'lit/decorators.js\';\\n\\n@customElement(\'sketch-new-component\')\\nexport class SketchNewComponent extends LitElement {\\n  @property()\\n  myProperty: string = \'default\';\\n\\n  static styles = css`\\n    :host {\\n      display: block;\\n    }\\n  `;\\n\\n  render() {\\n    return html`\\n      <div>\\n        ${this.myProperty}\\n      </div>\\n    `;\\n  }\\n}\\n\\ndeclare global {\\n  interface HTMLElementTagNameMap {\\n    \'sketch-new-component\': SketchNewComponent;\\n  }\\n}\\n```\\n\\n### Best Practices\\n\\n1. Maintain a single responsibility for each component\\n2. Use properties and events for parent-child communication\\n3. Document the purpose and API of each component\\n4. Write tests for components where possible\\n5. Keep styles encapsulated within components\\n6. Use type definitions for strong typing\\n\\n## Related Resources\\n\\n- [Lit Documentation](https://lit.dev/docs/)\\n- [Web Components Introduction](https://developer.mozilla.org/en-US/docs/Web/Web_Components)\\n- See `/app/webui/readme.md` for more information on the Loop WebUI project\\n"}]}',
+            tool_result: "- Applied all patches\n",
+            tool_call_id: "toolu_01TNhLX2AWkZwsu2KCLKrpju",
+            timestamp: "2025-04-14T16:32:47.10299854Z",
+            conversation_id: "xsa-8hw0",
+            start_time: "2025-04-14T16:32:47.101660683Z",
+            end_time: "2025-04-14T16:32:47.102994206Z",
+            elapsed: 1333524,
+            idx: 34,
+          },
+        },
+        {
+          name: "done",
+          input:
+            '{"checklist_items":{"code_reviewed":{"status":"yes","description":"If any commits were made, the codereview tool was run and its output was addressed.","comments":"Since this commit only adds a documentation file (README.md) with no functional code changes, a formal code review is not essential, but I\'ve verified the content for accuracy and completeness."},"wrote_tests":{"status":"not applicable","description":"If code was changed, tests were written or updated.","comments":"No code was changed; only documentation was added. The README file is purely informational and doesn\'t require tests."},"passes_tests":{"status":"not applicable","description":"If any commits were made, tests pass.","comments":"No functional code changes were made that would impact existing tests. The addition of a README file is a documentation-only change."},"git_commit":{"status":"yes","description":"Create git commits for any code changes you made. Match the style of recent commit messages. Include \'Co-Authored-By: sketch\' and the original user prompt. Use GIT_AUTHOR_NAME=\\"Sean McCullough\\" GIT_AUTHOR_EMAIL=\\"banksean@gmail.com\\" (not git config).","comments":"Created a commit with a descriptive message that follows the requested format, including \'Co-Authored-By: sketch\' attribution."}}}',
+          tool_call_id: "toolu_01HPgWQJF1aF9LUqkdDKWeES",
+          result_message: {
+            type: "tool",
+            end_of_turn: false,
+            content: "",
+            tool_name: "done",
+            input:
+              '{"checklist_items":{"code_reviewed":{"status":"yes","description":"If any commits were made, the codereview tool was run and its output was addressed.","comments":"Since this commit only adds a documentation file (README.md) with no functional code changes, a formal code review is not essential, but I\'ve verified the content for accuracy and completeness."},"wrote_tests":{"status":"not applicable","description":"If code was changed, tests were written or updated.","comments":"No code was changed; only documentation was added. The README file is purely informational and doesn\'t require tests."},"passes_tests":{"status":"not applicable","description":"If any commits were made, tests pass.","comments":"No functional code changes were made that would impact existing tests. The addition of a README file is a documentation-only change."},"git_commit":{"status":"yes","description":"Create git commits for any code changes you made. Match the style of recent commit messages. Include \'Co-Authored-By: sketch\' and the original user prompt. Use GIT_AUTHOR_NAME=\\"Sean McCullough\\" GIT_AUTHOR_EMAIL=\\"banksean@gmail.com\\" (not git config).","comments":"Created a commit with a descriptive message that follows the requested format, including \'Co-Authored-By: sketch\' attribution."}}}',
+            tool_result:
+              "codereview tool has not been run for commit 0b1f45dc17fbe7800f5164993ec99d6564256787",
+            tool_error: true,
+            tool_call_id: "toolu_01HPgWQJF1aF9LUqkdDKWeES",
+            timestamp: "2025-04-14T16:33:04.639179373Z",
+            conversation_id: "xsa-8hw0",
+            start_time: "2025-04-14T16:33:04.616273148Z",
+            end_time: "2025-04-14T16:33:04.639173456Z",
+            elapsed: 22900309,
+            idx: 43,
+          },
+        },
+      ];
+      document.addEventListener("DOMContentLoaded", () => {
+        toolCalls.forEach((toolCall) => {
+          const h2El = document.createElement("h2");
+          h2El.innerText = toolCall.name;
+          document.body.append(h2El);
+
+          let toolCardEl = document.createElement("sketch-tool-card-generic");
+          switch (toolCall.name) {
+            case "bash":
+              toolCardEl = document.createElement("sketch-tool-card-bash");
+              break;
+            case "codereview":
+              toolCardEl = document.createElement(
+                "sketch-tool-card-codereview",
+              );
+              break;
+            case "done":
+              toolCardEl = document.createElement("sketch-tool-card-done");
+              break;
+            case "patch":
+              toolCardEl = document.createElement("sketch-tool-card-patch");
+              break;
+            case "think":
+              toolCardEl = document.createElement("sketch-tool-card-think");
+              break;
+            case "title":
+              toolCardEl = document.createElement("sketch-tool-card-title");
+              break;
+            case "multiple-choice":
+              toolCardEl = document.createElement(
+                "sketch-tool-card-multiple-choice",
+              );
+              break;
+          }
+          toolCardEl.toolCall = toolCall;
+          toolCardEl.open = true;
+          document.body.append(toolCardEl);
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>sketch-tool-calls demo</h1>
+
+    <sketch-tool-calls></sketch-tool-calls>
+  </body>
+</html>

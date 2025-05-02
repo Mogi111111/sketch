@@ -1,0 +1,63 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "watch",
+      "path": "webui",
+      "group": "build",
+      "problemMatcher": ["$tsc-watch"],
+      "label": "webui: watch tsc",
+      "detail": "tsc --watch",
+      "isBackground": true
+    },
+    {
+      "type": "npm",
+      "script": "demo",
+      "path": "webui",
+      "group": "build",
+      "label": "webui: demo",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "beginsPattern": "VITE",
+            "endsPattern": "Local:"
+          }
+        }
+      ]
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "webui",
+      "group": "build",
+      "label": "webui: dev",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "pattern": [
+            {
+              "regexp": ".",
+              "file": 1,
+              "location": 2,
+              "message": 3
+            }
+          ],
+          "background": {
+            "beginsPattern": "VITE",
+            "endsPattern": "Local:"
+          }
+        }
+      ]
+    }
+  ]
+}

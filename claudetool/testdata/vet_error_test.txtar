@@ -1,0 +1,38 @@
+Check that vet errors are detected in a test run
+
+-- p.go --
+package p
+
+-- .commit --
+Initial commit
+
+-- p.go --
+package p
+
+import (
+	"fmt"
+)
+
+func F()  {
+	fmt.Printf("Not a string: %s\n", 10)
+}
+
+-- .commit --
+Add vet error
+
+-- .run_test --
+# Errors
+
+Test regressions detected between initial commit (INITIAL_COMMIT_HASH) and HEAD:
+
+1: sketch.dev: Previously had no tests, now has build/vet errors
+
+
+Gopls check issues detected:
+
+1. /PATH/TO/REPO/p.go:8:2-38: fmt.Printf format %s has arg 10 of wrong type int
+
+IMPORTANT: Only fix new gopls check issues in parts of the code that you have already edited. Do not change existing code that was not part of your current edits.
+
+
+Please fix before proceeding.

@@ -1,0 +1,26 @@
+Pre-existing gopls issues with line number changes should not be reported as regressions
+
+-- p.go --
+package p
+
+func F() {
+	x := 42
+}
+
+-- .commit --
+Initial commit with existing gopls issue
+
+-- p.go --
+package p
+
+// Change the line number of the unused variable
+
+func F() {
+	x := 42
+}
+
+-- .commit --
+Add comments that change line numbers
+
+-- .run_test --
+OK

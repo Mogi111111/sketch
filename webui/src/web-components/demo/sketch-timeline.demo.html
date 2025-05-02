@@ -1,0 +1,149 @@
+<html>
+  <head>
+    <title>sketch-timeline demo</title>
+    <link rel="stylesheet" href="demo.css" />
+    <script type="module" src="../sketch-timeline.ts"></script>
+    <script>
+      const messages = [
+        {
+          type: "user",
+          content: "a user message",
+        },
+        {
+          type: "agent",
+          content: "an agent message",
+        },
+        {
+          type: "agent",
+          content: "an agent message",
+        },
+        {
+          type: "agent",
+          content: "an agent message",
+        },
+        {
+          type: "user",
+          content: "a user message",
+        },
+        {
+          type: "user",
+          content: "a user message",
+        },
+        {
+          type: "agent",
+          content: "an agent message",
+        },
+        {
+          type: "user",
+          content: "a user message",
+        },
+        {
+          type: "tool",
+          content: "a tool use message",
+        },
+        {
+          type: "commit",
+          end_of_turn: false,
+          content: "",
+          commits: [
+            {
+              hash: "ece101c103ec231da87f4df05c1b5e6a24e13add",
+              subject: "Add README.md for web components directory",
+              body: "This adds documentation for the web components used in the Loop UI,\nincluding a description of each component, usage examples, and\ndevelopment guidelines.\n\nCo-Authored-By: sketch\nadd README.md for webui/src/web-components",
+              pushed_branch:
+                "sketch/create-readmemd-for-web-components-directory",
+            },
+          ],
+          timestamp: "2025-04-14T16:39:33.639533919Z",
+          conversation_id: "",
+          idx: 17,
+        },
+        {
+          type: "agent",
+          content: "an end-of-turn agent message",
+          end_of_turn: true,
+        },
+      ];
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const appShell = document.querySelector(".app-shell");
+        const timelineEl = document.querySelector("sketch-timeline");
+        timelineEl.messages = messages;
+        timelineEl.scrollContainer = appShell;
+        const addMessagesCheckbox = document.querySelector("#addMessages");
+        addMessagesCheckbox.addEventListener("change", toggleAddMessages);
+
+        let addingMessages = false;
+        const addNewMessagesInterval = 1000;
+
+        function addNewMessages() {
+          if (!addingMessages) {
+            return;
+          }
+          const n = new Date().getMilliseconds() % messages.length;
+          const msgToDup = messages[n];
+          const dup = JSON.parse(JSON.stringify(msgToDup));
+          dup.idx = messages.length;
+          dup.timestamp = new Date().toISOString();
+          messages.push(dup);
+          timelineEl.messages = messages.concat();
+          timelineEl.prop;
+          timelineEl.requestUpdate();
+        }
+
+        let addMessagesHandler = setInterval(
+          addNewMessages,
+          addNewMessagesInterval,
+        );
+
+        function toggleAddMessages() {
+          addingMessages = !addingMessages;
+          if (addingMessages) {
+          } else {
+          }
+        }
+      });
+    </script>
+    <style>
+      .app-shell {
+        display: block;
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        color: rgb(51, 51, 51);
+        line-height: 1.4;
+        min-height: 100vh;
+        width: 100%;
+        position: relative;
+        overflow-x: hidden;
+      }
+      .app-header {
+        flex-grow: 0;
+      }
+      .view-container {
+        flex-grow: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="app-header">
+        <h1>sketch-timeline demo</h1>
+        <input
+          type="checkbox"
+          id="addMessages"
+          title="Automatically add new messages"
+        /><label for="addMessages">Automatically add new messages</label>
+      </div>
+      <div class="view-container">
+        <div class="chat-view view-active">
+          <sketch-timeline></sketch-timeline>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

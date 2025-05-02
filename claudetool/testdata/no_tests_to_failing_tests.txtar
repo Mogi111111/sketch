@@ -1,0 +1,29 @@
+Adding failing tests is a regression
+
+-- p.go --
+package p
+
+-- .commit --
+Initial commit with no tests
+
+-- p_test.go --
+package p
+
+import "testing"
+
+func TestP(t *testing.T) {
+	t.FailNow()
+}
+
+-- .commit --
+Add failing test
+
+-- .run_test --
+# Errors
+
+Test regressions detected between initial commit (INITIAL_COMMIT_HASH) and HEAD:
+
+1: sketch.dev.TestP: New test is failing
+
+
+Please fix before proceeding.

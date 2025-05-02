@@ -1,0 +1,21 @@
+Test that formatting issues are not reported if pre-existing, per-file
+
+-- main.go --
+	package main
+
+-- .commit --
+Initial commit
+
+-- main.go --
+	package main
+
+	import "fmt"
+
+-- file1.go --
+	package main
+
+-- .commit --
+Add multiple files with formatting issues
+
+-- .run_autoformat --
+/PATH/TO/REPO/file1.go

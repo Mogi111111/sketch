@@ -1,0 +1,35 @@
+Going from a skipped test to a failing test is a regression
+
+-- p_test.go --
+package p
+
+import "testing"
+
+func TestP(t *testing.T) {
+	t.SkipNow()
+}
+
+-- .commit --
+Initial commit with skipped test
+
+-- p_test.go --
+package p
+
+import "testing"
+
+func TestP(t *testing.T) {
+	t.FailNow()
+}
+
+-- .commit --
+Change skipped test to failing test
+
+-- .run_test --
+# Errors
+
+Test regressions detected between initial commit (INITIAL_COMMIT_HASH) and HEAD:
+
+1: sketch.dev.TestP: Was skipped, now failing
+
+
+Please fix before proceeding.

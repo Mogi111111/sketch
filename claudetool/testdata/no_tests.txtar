@@ -1,0 +1,19 @@
+Going from no tests to no tests is not a regression
+
+-- p.go --
+package p
+
+-- .commit --
+Initial commit
+
+-- other.go --
+package p
+
+func F() {
+}
+
+-- .commit --
+Add func
+
+-- .run_test --
+OK

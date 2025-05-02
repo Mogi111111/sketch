@@ -1,0 +1,27 @@
+Detect newly introduced gopls issues
+
+-- .commit --
+Initial commit
+
+-- p.go --
+package p
+
+func F() {
+	return
+	panic("unreachable")
+}
+
+-- .commit --
+Add file with gopls issues
+
+-- .run_test --
+# Errors
+
+Gopls check issues detected:
+
+1. /PATH/TO/REPO/p.go:5:2-22: unreachable code
+
+IMPORTANT: Only fix new gopls check issues in parts of the code that you have already edited. Do not change existing code that was not part of your current edits.
+
+
+Please fix before proceeding.

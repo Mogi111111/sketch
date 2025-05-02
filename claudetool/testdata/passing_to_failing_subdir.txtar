@@ -1,0 +1,34 @@
+Going from a passing test to a failing test in a subdir is a regression
+
+-- foo/p_test.go --
+package p
+
+import "testing"
+
+func TestP(t *testing.T) {
+}
+
+-- .commit --
+Initial commit with passing test
+
+-- foo/p_test.go --
+package p
+
+import "testing"
+
+func TestP(t *testing.T) {
+	t.FailNow()
+}
+
+-- .commit --
+Break test
+
+-- .run_test --
+# Errors
+
+Test regressions detected between initial commit (INITIAL_COMMIT_HASH) and HEAD:
+
+1: sketch.dev/foo.TestP: Was passing, now failing
+
+
+Please fix before proceeding.

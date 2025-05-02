@@ -1,0 +1,53 @@
+Test that all issues across multiple commits are reported
+
+-- a.go --
+package main
+
+-- .commit --
+Initial commit
+
+-- b.go --
+package main
+
+import "sync"
+
+var x sync.Mutex
+var y = x
+
+-- .commit --
+Add another file
+
+-- c_test.go --
+package main
+
+import "testing"
+
+func TestX(t *testing.T) {
+	t.FailNow()
+}
+
+-- .commit --
+Add a failing test
+
+-- d.go --
+package main
+
+-- .commit --
+Add yet another file
+
+-- .run_test --
+# Errors
+
+Test regressions detected between initial commit (INITIAL_COMMIT_HASH) and HEAD:
+
+1: sketch.dev.TestX: New test is failing
+
+
+Gopls check issues detected:
+
+1. /PATH/TO/REPO/b.go:6:9-10: variable declaration copies lock value to y: sync.Mutex
+
+IMPORTANT: Only fix new gopls check issues in parts of the code that you have already edited. Do not change existing code that was not part of your current edits.
+
+
+Please fix before proceeding.

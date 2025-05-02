@@ -1,0 +1,76 @@
+httprr trace v1
+3702 1887
+POST https://api.anthropic.com/v1/messages HTTP/1.1
+Host: api.anthropic.com
+User-Agent: Go-http-client/1.1
+Content-Length: 3505
+Anthropic-Version: 2023-06-01
+Content-Type: application/json
+
+{
+ "model": "claude-3-7-sonnet-20250219",
+ "messages": [
+  {
+   "role": "user",
+   "content": [
+    {
+     "type": "text",
+     "text": "\nCall the dockerfile tool to create a Dockerfile.\nThe parameters to dockerfile fill out the From and ExtraCmds\ntemplate variables in the following Go template:\n\n```\nFROM golang:1.24-bookworm\n\n# attempt to keep package installs lean\nRUN printf '%s\\n' \\\n      'path-exclude=/usr/share/man/*' \\\n      'path-exclude=/usr/share/doc/*' \\\n      'path-exclude=/usr/share/doc-base/*' \\\n      'path-exclude=/usr/share/info/*' \\\n      'path-exclude=/usr/share/locale/*' \\\n      'path-exclude=/usr/share/groff/*' \\\n      'path-exclude=/usr/share/lintian/*' \\\n      'path-exclude=/usr/share/zoneinfo/*' \\\n    \u003e /etc/dpkg/dpkg.cfg.d/01_nodoc\n\nRUN --mount=type=cache,target=/var/cache/apt \\\n\tset -eux; \\\n\tapt-get update; \\\n\tapt-get install -y --no-install-recommends \\\n\t\tgit jq sqlite3 npm nodejs gh ripgrep fzf python3 curl vim\n\n# Strip out docs from debian.\nRUN rm -rf /usr/share/{doc,doc-base,info,lintian,man,groff,locale,zoneinfo}/*\n\nENV PATH=\"$GOPATH/bin:$PATH\"\n\n# While these binaries install generally useful supporting packages,\n# the specific versions are rarely what a user wants so there is no\n# point polluting the base image module with them.\n\nRUN --mount=type=cache,target=/go/pkg/mod \\\n\t--mount=type=cache,target=/root/.cache/go-build \\\n\tset -eux; \\\n\tgo install golang.org/x/tools/cmd/goimports@latest; \\\n\tgo install golang.org/x/tools/gopls@latest; \\\n\tgo install mvdan.cc/gofumpt@latest; \\\n\tgo clean -cache -testcache\n\nENV GOTOOLCHAIN=auto\nENV SKETCH=1\n\nRUN mkdir -p /root/.cache/sketch/webui\n\nARG GIT_USER_EMAIL\nARG GIT_USER_NAME\n\nRUN git config --global user.email \"$GIT_USER_EMAIL\" \u0026\u0026 \\\n    git config --global user.name \"$GIT_USER_NAME\"\n\nLABEL sketch_context=\"{{.InitFilesHash}}\"\nCOPY . /app\n\nWORKDIR /app{{.SubDir}}\nRUN if [ -f go.mod ]; then go mod download; fi\n\n{{.ExtraCmds}}\n\nCMD [\"/bin/sketch\"]\n\n```\n\nIn particular:\n- Assume it is primarily a Go project.\n- Python env setup is challenging and often no required, so any RUN commands involving python tooling should be written to let docker build continue if there is a failure.\n- Include any tools particular to this repository that can be inferred from the given context.\n- Append || true to any apt-get install commands in case the package does not exist.\n- MINIMIZE the number of extra_cmds generated. Straightforward environments do not need any.\n- Do NOT expose any ports.\n- Do NOT generate any CMD or ENTRYPOINT extra commands.\nHere is the content of several files from the repository that may be relevant:\n\n"
+    },
+    {
+     "type": "text",
+     "text": "Here is the contents README.md:\n\u003cfile\u003e\n# Our amazing repo\n\nTo use this project you need python 3.11 and the dvc tool\n\u003c/file\u003e\n\n"
+    },
+    {
+     "type": "text",
+     "text": "Now call the dockerfile tool.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ]
+  }
+ ],
+ "max_tokens": 8192,
+ "tools": [
+  {
+   "name": "dockerfile",
+   "description": "Helps define a Dockerfile that sets up a dev environment for this project.",
+   "input_schema": {
+    "type": "object",
+    "required": [
+     "extra_cmds"
+    ],
+    "properties": {
+     "extra_cmds": {
+      "type": "string",
+      "description": "Extra commands to add to the dockerfile."
+     }
+    }
+   }
+  }
+ ]
+}HTTP/2.0 200 OK
+Anthropic-Organization-Id: 3c473a21-7208-450a-a9f8-80aebda45c1b
+Anthropic-Ratelimit-Input-Tokens-Limit: 200000
+Anthropic-Ratelimit-Input-Tokens-Remaining: 200000
+Anthropic-Ratelimit-Input-Tokens-Reset: 2025-05-01T19:02:25Z
+Anthropic-Ratelimit-Output-Tokens-Limit: 80000
+Anthropic-Ratelimit-Output-Tokens-Remaining: 80000
+Anthropic-Ratelimit-Output-Tokens-Reset: 2025-05-01T19:02:28Z
+Anthropic-Ratelimit-Requests-Limit: 4000
+Anthropic-Ratelimit-Requests-Remaining: 3999
+Anthropic-Ratelimit-Requests-Reset: 2025-05-01T19:02:24Z
+Anthropic-Ratelimit-Tokens-Limit: 280000
+Anthropic-Ratelimit-Tokens-Remaining: 280000
+Anthropic-Ratelimit-Tokens-Reset: 2025-05-01T19:02:25Z
+Cf-Cache-Status: DYNAMIC
+Cf-Ray: 9391886fdb88182a-SJC
+Content-Type: application/json
+Date: Thu, 01 May 2025 19:02:28 GMT
+Request-Id: req_011CNhKzUsGS5rQrDk6nz24m
+Server: cloudflare
+Via: 1.1 google
+X-Robots-Tag: none
+
+{"id":"msg_01FHgcbUNsUgPr94bUXGbFtw","type":"message","role":"assistant","model":"claude-3-7-sonnet-20250219","content":[{"type":"text","text":"Based on the README.md content, I can see this project requires Python 3.11 and the DVC (Data Version Control) tool. I'll create a Dockerfile that accommodates these requirements while following your guidelines."},{"type":"tool_use","id":"toolu_01QdhghYK4Y3uJVRohyenCf3","name":"dockerfile","input":{"extra_cmds":"# Install Python 3.11 (if not present in base image)\nRUN apt-get update && apt-get install -y python3.11 python3.11-venv python3-pip || true\n\n# Install DVC tool as requested in README\nRUN pip install dvc || true\n\n# Create and activate Python virtual environment\nRUN python3.11 -m venv /app/.venv || true\nENV PATH=\"/app/.venv/bin:$PATH\""}}],"stop_reason":"tool_use","stop_sequence":null,"usage":{"input_tokens":4,"cache_creation_input_tokens":1240,"cache_read_input_tokens":0,"output_tokens":211}}

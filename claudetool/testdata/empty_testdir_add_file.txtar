@@ -1,0 +1,39 @@
+Test adding a non-empty file to testdata when test expects empty files
+
+-- p_test.go --
+package p
+
+import (
+	"os"
+	"path/filepath"
+	"testing"
+)
+
+func TestEmptyTestdata(t *testing.T) {
+	files, _ := filepath.Glob("testdata/*")
+	for _, path := range files {
+		data, _ := os.ReadFile(path)
+		if len(data) > 0 {
+			t.Fatalf("testdata file is not empty: %s", path)
+		}
+	}
+}
+
+-- testdata/empty --
+-- .commit --
+Initial commit with empty testdata file
+
+-- testdata/nonempty --
+hi
+-- .commit --
+Add non-empty file to testdata
+
+-- .run_test --
+# Errors
+
+Test regressions detected between initial commit (INITIAL_COMMIT_HASH) and HEAD:
+
+1: sketch.dev.TestEmptyTestdata: Was passing, now failing
+
+
+Please fix before proceeding.

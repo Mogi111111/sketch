@@ -1,0 +1,30 @@
+HTTP/1.1 200 OK
+Date: Wed, 05 Mar 2025 10:00:00 GMT
+Content-Type: application/json
+Content-Length: 987
+
+{
+  "id": "msg_0123456789abcdef",
+  "type": "message",
+  "role": "assistant",
+  "model": "claude-3-opus-20240229",
+  "stop_reason": "tool_use",
+  "stop_sequence": null,
+  "usage": {
+    "input_tokens": 256,
+    "output_tokens": 180
+  },
+  "content": [
+    {
+      "type": "text",
+      "text": "I'll create a Dockerfile for this Go project."
+    }
+  ],
+  "tool_use": {
+    "id": "tu_0123456789abcdef",
+    "name": "dockerfile",
+    "input": {
+      "contents": "FROM golang:1.21-alpine\n\nWORKDIR /app\n\n# Install git for dependencies\nRUN apk add --no-cache git\n\n# Pre-copy/cache go.mod for efficient Docker caching\nCOPY go.mod go.sum* ./\nRUN go mod download\n\n# Copy the source code\nCOPY . .\n\n# Build the application\nRUN go build -o app ./cmd/sketch\n\n# Environment setup\nENV CGO_ENABLED=0\n\nCMD [\"./app\"]"
+    }
+  }
+}
